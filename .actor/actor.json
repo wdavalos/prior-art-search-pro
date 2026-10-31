@@ -1,0 +1,13 @@
+{
+  "actorSpecification": 1,
+  "name": "prior-art-search-pro",
+  "title": "Prior Art Search Pro (Google Patents, Legal Status)",
+  "description": "Prior-art search across the Google Patents index (USPTO, EPO, WIPO, JPO, CN, KR and 100+ offices) built for IP teams: clean HTML-free rows with assignee, inventor, dates, snippets, legal status per country and direct patent URLs. Assignee, inventor, CPC, priority-date range, status and kind filters. No API key.",
+  "version": "0.0",
+  "buildTag": "latest",
+  "minMemoryMbytes": 256,
+  "output": "./output_schema.json",
+  "storages": {
+    "dataset": "./dataset_schema.json"
+  }
+}

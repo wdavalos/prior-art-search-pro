@@ -1,33 +1,66 @@
-# Prior Art Search Pro — Google Patents, Legal Status
+# Prior Art Search Pro (Google Patents, Legal Status)
 
-Search the Google Patents index for prior art: keywords plus assignee, inventor, CPC class, priority-date window, granted/application status, patent vs. design, country and language. Flat rows with legal status. No login, no API key, no proxy.
-
-**Run it on the Apify Store:** https://apify.com/red.cars/prior-art-search-pro
-**ScraperFleet data page:** https://scraperfleet.com/actors/prior-art-search-pro/
+Search the Google Patents index for prior art: keyword queries plus assignee, inventor, CPC class, priority-date window, granted/application status, patent vs. design, country and language filters. Flat rows with title, abstract snippet, dates, assignee, inventor, publication number, Google Patents URL, PDF and legal status. $0.005/run + $2.00 per 1,000 rows.
 
 ## Why this actor
 
-- Purpose-built prior-art search: keyword queries plus structured filters (assignee, inventor, CPC class, priority-date window, legal status, patent vs. design, country, language) against the public Google Patents search endpoint.
-- Flat, row-oriented patent metadata: bibliographic fields, publication/filing/priority/grant dates, publication identifiers and URLs, PDF links, per-country legal status, and a patent-family active indicator for fast triage of live versus expired/abandoned families.
-- Cleans HTML entities and highlight tags from results; supports relevance or newest sorting.
-- Category: DEVELOPER_TOOLS, AUTOMATION
-- Runs on Apify's managed platform with results delivered to the actor dataset, ready via API, webhook, or download.
+- **No login, no API key, no proxy.** Reads the public Google Patents search endpoint directly (plain HTTPS fetch, datacenter-friendly).
+- **Filters that matter for prior art:** assignee, inventor, CPC class, priority date before/after (YYYYMMDD), granted vs. application, patent vs. design, country, language, newest-first or relevance.
+- **Legal status per row:** family status and an `familyActive` boolean folded in from the index, so you can triage live patents vs. dead ones without opening every PDF.
+- **Flat, predictable pricing:** $0.005 per run + $0.002 per row ($2.00 per 1,000). No enrichment tiers, no hidden per-event costs.
+- **Clean rows:** HTML entities and highlight tags stripped; hard result caps (index itself caps any single query at 1,000 results); zero-result runs push one hint row (status ZERO_RESULTS) instead of charging you for nothing.
 
 ## Comparison
 
-If you're comparing Google Patents prior-art search tools on the Apify Store, this actor is built for one job: prior-art search straight from the public Google Patents index as flat rows, with per-country legal status and patent-family activity folded into every row. It pairs with [Academic Research MCP](https://github.com/wdavalos/academic-research-mcp) for the research side of a clearance project: the patents give the claims landscape, the MCP runs the literature and citation search.
+| Actor | 30-day users | Pricing | Notes |
+|---|---|---|---|
+| **prior-art-search-pro (this)** | new | $0.005/run + $2.00/1k rows, flat | filters + legal status, no proxy, no tiers |
+| khadinakbar/google-patents-scraper | 56 | $2.00/1k basic, $5.00/1k detailed (per-event tiers) | tiered enrichment pricing; paid events per depth |
+| constructive_calm/google-patents-intelligence | 5 | $0.01/run + $2–8/1k per event | higher start cost, fewer users |
+| nexgendata/uspto-patent-search | 1 | per-result event pricing | tiny user base |
+
+Sources: Apify Store listings and public run stats, Oct 30, 2026.
+
+## Input
+
+| Field | Type | Notes |
+|---|---|---|
+| `query` | string | Keyword query, e.g. `machine learning` or `cpc:G06F battery` |
+| `maxResults` | number | 1–1000, default 10 (index caps any query at 1,000) |
+| `assignee` | string | e.g. `Tesla` |
+| `inventor` | string | e.g. `Muddu` |
+| `cpc` | string | e.g. `G06F` |
+| `before` / `after` | string | Priority-date window, YYYYMMDD |
+| `status` | select | GRANT or APPLICATION |
+| `type` | select | PATENT or DESIGN |
+| `country` | string | e.g. `US` |
+| `language` | string | e.g. `en` |
+| `sortBy` | select | relevance (default) or newest |
+
+## Output
+
+One row per patent: `title`, `publicationNumber`, `url`, `snippet`, `assignee`, `inventor`, `priorityDate`, `filingDate`, `grantDate`, `publicationDate`, `language`, `country`, `legalStatus` (per-country state, e.g. ACTIVE), `familyActive`.
+
+Zero-result runs push one row `{status: "ZERO_RESULTS", reason: ...}`. Nothing is charged for it.
 
 ## Pricing
 
-$0.005 per run plus $2.00 per 1,000 result rows on Apify's pay-per-event model.
+- Actor start: **$0.005** per run.
+- Result row: **$0.002** per row = **$2.00 per 1,000 rows**.
+- No proxy. Platform usage is not billed to the user; our cost per 1,000 rows is far below price, so the actor never runs at negative margin.
+
+## Pair it with Academic Research MCP
+
+Cover both sides of a prior-art check: [Academic Research MCP](https://apify.com/red.cars/academic-research-mcp) searches 600M+ papers, grants, and citations across CrossRef, OpenAlex, PubMed and DBLP, while this actor pulls the patent record from Google Patents with legal status. One agent, two tool calls, literature plus patents.
 
 ## FAQ
 
-**What does Prior Art Search Pro do?**
-Searches the Google Patents index for prior art by keyword plus structured filters (assignee, inventor, CPC class, priority-date window, legal status, patent vs. design, country, language) and returns flat rows with bibliographic data, dates, PDF links, per-country legal status and patent-family activity.
+**Do I need an API key?** No. The Google Patents search endpoint is public.
 
-**How is it priced?**
-$0.005 per run plus $2.00 per 1,000 result rows on Apify's pay-per-event model.
+**Is there a result cap?** Yes, 1,000 rows per query, capped by the source index itself. For broad queries, narrow with assignee, CPC or date filters.
 
-**Where do I run it?**
-On the Apify platform, from the [actor page](https://apify.com/red.cars/prior-art-search-pro) or the Apify API. Enter your input and run; results land in the actor's dataset.
+**How fresh is the data?** The index updates continuously; sortBy=newest returns latest publications first.
+
+**Can I search by company?** Yes, use `assignee` (e.g. `Tesla`) alone or combined with `query`.
+
+**What is `familyActive`?** True when the patent family's best stage is active in at least one country, folded in from the index's family metadata.

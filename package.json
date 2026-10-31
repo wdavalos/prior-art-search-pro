@@ -1,0 +1,10 @@
+{
+  "name": "google-patents-search-pro",
+  "version": "0.0.1",
+  "description": "Prior-art search across the Google Patents index with clean rows, legal status and assignee/inventor/CPC/date filters.",
+  "main": "src/main.js",
+  "dependencies": {
+    "apify": "^3.4.0"
+  },
+  "scripts": { "start": "node src/main.js" }
+}

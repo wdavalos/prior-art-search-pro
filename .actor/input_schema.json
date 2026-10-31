@@ -1,0 +1,122 @@
+{
+  "title": "Google Patents Search Pro input",
+  "type": "object",
+  "schemaVersion": 1,
+  "properties": {
+    "query": {
+      "title": "Search query",
+      "type": "string",
+      "editor": "textfield",
+      "description": "Free-text query, e.g. 'machine learning'. Combined with the other filters.",
+      "default": "machine learning"
+    },
+    "maxResults": {
+      "title": "Max results",
+      "type": "integer",
+      "editor": "number",
+      "description": "How many patents to return (1-1000; the Google Patents index caps search results at 1,000 per query).",
+      "default": 10,
+      "maximum": 1000,
+      "minimum": 1
+    },
+    "assignee": {
+      "title": "Assignee",
+      "type": "string",
+      "editor": "textfield",
+      "description": "Optional assignee filter, e.g. 'Tesla'.",
+      "default": ""
+    },
+    "inventor": {
+      "title": "Inventor",
+      "type": "string",
+      "editor": "textfield",
+      "description": "Optional inventor filter, e.g. 'John Smith'.",
+      "default": ""
+    },
+    "cpc": {
+      "title": "CPC class",
+      "type": "string",
+      "editor": "textfield",
+      "description": "Optional CPC classification code, e.g. G06F or G06F17. Added to the query as cpc:<code>.",
+      "default": ""
+    },
+    "before": {
+      "title": "Filed before (YYYYMMDD)",
+      "type": "string",
+      "editor": "textfield",
+      "description": "Optional upper date bound on the priority date, e.g. 20230101.",
+      "default": ""
+    },
+    "after": {
+      "title": "Filed after (YYYYMMDD)",
+      "type": "string",
+      "editor": "textfield",
+      "description": "Optional lower date bound on the priority date, e.g. 20200101.",
+      "default": ""
+    },
+    "status": {
+      "title": "Status",
+      "type": "string",
+      "editor": "select",
+      "enum": [
+        "",
+        "GRANT",
+        "APPLICATION"
+      ],
+      "enumTitles": [
+        "Any",
+        "Granted patents",
+        "Published applications"
+      ],
+      "default": "",
+      "description": "Optional: limit to granted patents or published applications."
+    },
+    "type": {
+      "title": "Kind",
+      "type": "string",
+      "editor": "select",
+      "enum": [
+        "",
+        "PATENT",
+        "DESIGN"
+      ],
+      "enumTitles": [
+        "Any",
+        "Utility patents",
+        "Design patents"
+      ],
+      "default": "",
+      "description": "Optional: utility patents or design patents."
+    },
+    "country": {
+      "title": "Country code",
+      "type": "string",
+      "editor": "textfield",
+      "description": "Optional two-letter country filter, e.g. US, EP, WO, CN.",
+      "default": ""
+    },
+    "language": {
+      "title": "Language",
+      "type": "string",
+      "editor": "textfield",
+      "description": "Optional language filter, e.g. ENGLISH, GERMAN.",
+      "default": ""
+    },
+    "sortBy": {
+      "title": "Sort by",
+      "type": "string",
+      "editor": "select",
+      "enum": [
+        "relevance",
+        "newest"
+      ],
+      "enumTitles": [
+        "Relevance",
+        "Newest first"
+      ],
+      "default": "relevance",
+      "description": "Relevance or newest first."
+    }
+  },
+  "required": []
+}

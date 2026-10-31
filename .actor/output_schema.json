@@ -1,0 +1,11 @@
+{
+  "actorOutputSchemaVersion": 1,
+  "title": "Google Patents Search Pro output",
+  "properties": {
+    "results": {
+      "type": "string",
+      "template": "{{links.apiDefaultDatasetUrl}}/items",
+      "description": "Clean prior-art rows: title, publication number, direct URL, snippet, assignee, inventor, priority/filing/grant/publication dates, language, country, legal status per country, and a status/hint row when the search comes back empty or fails."
+    }
+  }
+}

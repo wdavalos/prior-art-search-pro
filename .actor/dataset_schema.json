@@ -1,0 +1,46 @@
+{
+  "actorSpecification": 1,
+  "fields": {
+    "type": "object",
+    "properties": {
+      "title": { "type": "string" },
+      "publicationNumber": { "type": "string" },
+      "url": { "type": "string", "format": "uri" },
+      "snippet": { "type": "string" },
+      "assignee": { "type": "string" },
+      "inventor": { "type": "string" },
+      "priorityDate": { "type": "string" },
+      "filingDate": { "type": "string" },
+      "grantDate": { "type": "string" },
+      "publicationDate": { "type": "string" },
+      "language": { "type": "string" },
+      "country": { "type": "string" },
+      "legalStatus": { "type": "array" },
+      "familyActive": { "type": "boolean" },
+      "status": { "type": "string" },
+      "httpStatus": { "type": "integer" },
+      "reason": { "type": "string" }
+    }
+  },
+  "views": {
+    "overview": {
+      "title": "Prior Art rows",
+      "transformation": {
+        "fields": [
+          "title",
+          "publicationNumber",
+          "assignee",
+          "inventor",
+          "country",
+          "priorityDate",
+          "grantDate",
+          "familyActive",
+          "url"
+        ]
+      },
+      "display": {
+        "component": "table"
+      }
+    }
+  }
+}
