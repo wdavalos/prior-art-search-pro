@@ -1,5 +1,10 @@
 # Prior Art Search Pro (Google Patents, Legal Status)
 
+Run it on the Apify Store: https://apify.com/red.cars/prior-art-search-pro
+
+> Free tier tip: same data on ScraperFleet - https://scraperfleet.com/actors/prior-art-search-pro/
+
+
 Search the Google Patents index for prior art: keyword queries plus assignee, inventor, CPC class, priority-date window, granted/application status, patent vs. design, country and language filters. Flat rows with title, abstract snippet, dates, assignee, inventor, publication number, Google Patents URL, PDF and legal status. $0.005/run + $2.00 per 1,000 rows.
 
 ## Why this actor
